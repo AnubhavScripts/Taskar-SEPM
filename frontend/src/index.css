@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root { color-scheme: dark; }
+  html { scroll-behavior: smooth; }
+  body {
+    background-color: #131313;
+    color: #e5e2e1;
+    -webkit-font-smoothing: antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  #root { @apply min-h-screen flex flex-col; }
+  * { @apply box-border m-0 p-0; }
+  a { @apply text-inherit no-underline; }
+  ul { list-style: none; }
+  button { @apply cursor-pointer border-0 bg-transparent font-[inherit]; }
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: #131313; }
+  ::-webkit-scrollbar-thumb { @apply bg-zinc-700 rounded-full; }
+  ::-webkit-scrollbar-thumb:hover { background: #ff7a00; }
+  ::selection { background: rgba(255,122,0,0.2); color: #ff9a3c; }
+}
+
+@layer components {
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .glass-panel:hover {
+    border-color: #ff7a00;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+  }
+  .glow-button {
+    box-shadow: 0 0 20px rgba(255, 122, 0, 0.4);
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+  }
+  .glow-button:hover {
+    box-shadow: 0 0 30px rgba(255, 122, 0, 0.6);
+  }
+  .ripple-line {
+    background: linear-gradient(90deg, transparent, #ff7a00, transparent);
+    height: 1px;
+    width: 100%;
+  }
+  .material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+  }
+  .spinner {
+    @apply inline-block w-4 h-4 border-2 border-white/20 border-t-white rounded-full;
+    animation: spin 0.7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Ripple propagation animations */
+  @keyframes nodeRipple {
+    0%   { opacity: 0.3; transform: scale(1); }
+    50%  { opacity: 1;   transform: scale(1.06); }
+    100% { opacity: 0.3; transform: scale(1); }
+  }
+  @keyframes edgeFlow {
+    from { stroke-dashoffset: 20; }
+    to   { stroke-dashoffset: 0; }
+  }
+  @keyframes ripplePulse {
+    0%   { box-shadow: 0 0 0   0   rgba(255,122,0,0.5); }
+    70%  { box-shadow: 0 0 0  10px rgba(255,122,0,0); }
+    100% { box-shadow: 0 0 0   0   rgba(255,122,0,0); }
+  }
+  .node-ripple   { animation: nodeRipple  1.2s ease-in-out infinite; }
+  .edge-flowing  { animation: edgeFlow    0.6s linear infinite; }
+  .pulse-ring    { animation: ripplePulse 1.4s ease-out infinite; }
+}
